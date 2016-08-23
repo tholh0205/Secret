@@ -12,9 +12,9 @@ import com.secret.actionbar.BaseFragment;
 import com.secret.ui.widgets.LayoutHelper;
 
 /**
- * Created by tholh on 8/23/16.
+ * Created by ThoLH on 8/23/16.
  */
-public class MainActivity extends BaseFragment {
+public class LoginActivity extends BaseFragment {
 
     @Override
     protected View createView(Context context) {
@@ -26,11 +26,17 @@ public class MainActivity extends BaseFragment {
         actionBar.setLayoutParams(LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.LEFT | Gravity.TOP));
         frameLayout.addView(actionBar);
         Button btnLogin = new Button(context);
-        btnLogin.setText("Main");
+        btnLogin.setText("Login");
         btnLogin.setLayoutParams(LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         frameLayout.addView(btnLogin);
         frameLayout.setBackgroundColor(Color.WHITE);
         fragmentView = frameLayout;
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presentFragment(new MainActivity());
+            }
+        });
         return super.createView(context);
     }
 }

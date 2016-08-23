@@ -17,11 +17,14 @@ import com.nineoldandroids.animation.AnimatorSet;
 public class BaseFragment {
 
     protected View fragmentView;
+    protected ActionBarLayout parentLayout;
     protected ActionBar actionBar;
     private Dialog visibleDialog;
     //private Activity activity;
     private Bundle arguments;
     protected boolean swipeBackEnabled = true;
+    public boolean hasOwnBackground = false;
+    protected boolean isFinished = false;
 
     public BaseFragment() {
     }
@@ -78,7 +81,7 @@ public class BaseFragment {
     }
 
     public void onFragmentDestroy() {
-
+        isFinished = true;
     }
 
     public boolean onBackPressed() {
@@ -141,4 +144,80 @@ public class BaseFragment {
     }
 
 
+    public void onBeginSlide() {
+
+    }
+
+    protected void setParentLayout(ActionBarLayout layout) {
+        if (parentLayout != layout) {
+            parentLayout = layout;
+            if (fragmentView != null) {
+                ViewGroup parent = (ViewGroup) fragmentView.getParent();
+                if (parent != null) {
+                    try {
+                        parent.removeView(fragmentView);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (parentLayout != null && parentLayout.getContext() != fragmentView.getContext()) {
+                    fragmentView = null;
+                }
+            }
+            if (actionBar != null) {
+                ViewGroup parent = (ViewGroup) actionBar.getParent();
+                if (parent != null) {
+                    try {
+                        parent.removeView(actionBar);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (parentLayout != null && parentLayout.getContext() != actionBar.getContext()) {
+                    actionBar = null;
+                }
+            }
+//            if (parentLayout != null && actionBar == null) {
+//                actionBar = createActionBar(parentLayout.getContext());
+//                actionBar.parentFragment = this;
+//            }
+        }
+    }
+
+    public boolean presentFragment(BaseFragment fragment) {
+        return parentLayout != null && parentLayout.presentFragment(fragment);
+    }
+
+    public boolean presentFragment(BaseFragment fragment, boolean removeLast) {
+        return parentLayout != null && parentLayout.presentFragment(fragment, removeLast);
+    }
+
+    public boolean presentFragment(BaseFragment fragment, boolean removeLast, boolean forceWithoutAnimation) {
+        return parentLayout != null && parentLayout.presentFragment(fragment, removeLast, forceWithoutAnimation, true);
+    }
+
+    public Activity getParentActivity() {
+        if (parentLayout != null) {
+            return parentLayout.parentActivity;
+        }
+        return null;
+    }
+
+    public void finishFragment() {
+        finishFragment(true);
+    }
+
+    public void finishFragment(boolean animated) {
+        if (isFinished || parentLayout == null) {
+            return;
+        }
+        parentLayout.closeLastFragment(animated);
+    }
+
+    public void removeSelfFromStack() {
+        if (isFinished || parentLayout == null) {
+            return;
+        }
+        parentLayout.removeFragmentFromStack(this);
+    }
 }
