@@ -41,9 +41,6 @@ public class BaseFragment {
         return fragmentView;
     }
 
-    public void onStart() {
-    }
-
     public void onResume() {
         android.util.Log.d(getClass().getSimpleName(), "onResume");
     }
@@ -58,9 +55,6 @@ public class BaseFragment {
             visibleDialog.dismiss();
             visibleDialog = null;
         }
-    }
-
-    public void onStop() {
     }
 
     protected void clearViews() {

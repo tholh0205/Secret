@@ -1,6 +1,8 @@
 package com.secret;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Window;
 
@@ -47,8 +49,31 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
         actionBarLayout.onBackPressed();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        actionBarLayout.onLowMemory();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (actionBarLayout.fragmentsStack.size() != 0) {
+            BaseFragment fragment = actionBarLayout.fragmentsStack.get(actionBarLayout.fragmentsStack.size() - 1);
+            fragment.onActivityResultFragment(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (actionBarLayout.fragmentsStack.size() != 0) {
+            BaseFragment fragment = actionBarLayout.fragmentsStack.get(actionBarLayout.fragmentsStack.size() - 1);
+            fragment.onRequestPermissionsResultFragment(requestCode, permissions, grantResults);
+        }
     }
 
     @Override
