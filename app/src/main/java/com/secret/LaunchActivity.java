@@ -34,6 +34,24 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        actionBarLayout.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        actionBarLayout.onPause();
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        actionBarLayout.onBackPressed();
+    }
+
+    @Override
     public boolean onPreIme() {
         return false;
     }
@@ -50,7 +68,11 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 
     @Override
     public boolean needCloseLastFragment(ActionBarLayout layout) {
-        return false;
+        if (layout.fragmentsStack.size() <= 1) {
+            finish();
+            return false;
+        }
+        return true;
     }
 
     @Override

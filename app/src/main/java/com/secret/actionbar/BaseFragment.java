@@ -45,9 +45,11 @@ public class BaseFragment {
     }
 
     public void onResume() {
+        android.util.Log.d(getClass().getSimpleName(), "onResume");
     }
 
     public void onPause() {
+        android.util.Log.d(getClass().getSimpleName(), "onPause");
         if (actionBar != null) {
             actionBar.onPause();
         }

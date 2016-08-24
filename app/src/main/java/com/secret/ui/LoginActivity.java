@@ -39,4 +39,5 @@ public class LoginActivity extends BaseFragment {
         });
         return super.createView(context);
     }
+
 }
