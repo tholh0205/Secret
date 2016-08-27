@@ -1,4 +1,4 @@
-package com.secret;
+package com.secret.ui;
 
 import android.app.Activity;
 import android.content.Intent;

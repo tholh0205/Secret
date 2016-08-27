@@ -24,6 +24,15 @@ public class LoginActivity extends BaseFragment {
         actionBar.setTitle(getClass().getSimpleName());
         actionBar.setBackButtonImage(android.R.drawable.ic_menu_close_clear_cancel);
         actionBar.setLayoutParams(LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.LEFT | Gravity.TOP));
+        actionBar.setActionBarMenuOnItemClick(new ActionBar.ActionBarMenuOnItemClick() {
+            @Override
+            public void onItemClick(int id) {
+                super.onItemClick(id);
+                if (id == android.R.id.home) {
+                    finishFragment();
+                }
+            }
+        });
         frameLayout.addView(actionBar);
         Button btnLogin = new Button(context);
         btnLogin.setText("Login");

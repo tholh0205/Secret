@@ -2,23 +2,19 @@ package com.secret.ui;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
-import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.secret.actionbar.ActionBar;
 import com.secret.actionbar.BaseFragment;
 import com.secret.ui.widgets.LayoutHelper;
 
 /**
- * Created by tholh on 8/23/16.
+ * Created by ThoLH on 8/27/16.
  */
-public class MainActivity extends BaseFragment {
+public class ServiceDetailActivity extends BaseFragment {
 
     @Override
     protected View createView(Context context) {
@@ -38,30 +34,18 @@ public class MainActivity extends BaseFragment {
             }
         });
         frameLayout.addView(actionBar);
-
-        SimpleDraweeView imageView = new SimpleDraweeView(context);
-        imageView.setLayoutParams(LayoutHelper.createFrame(300, 300, Gravity.CENTER));
-        frameLayout.addView(imageView);
-        GenericDraweeHierarchyBuilder builder =
-                new GenericDraweeHierarchyBuilder(context.getResources());
-        GenericDraweeHierarchy hierarchy = builder
-                .setFadeDuration(1000)
-                .build();
-        imageView.setHierarchy(hierarchy);
-        imageView.setImageURI("https://dyn0.media.forbiddenplanet.com/products/god%20of%20bloody%20war.jpg.jpg");
-
         Button btnLogin = new Button(context);
-        btnLogin.setText("Main");
+        btnLogin.setText(getClass().getSimpleName());
         btnLogin.setLayoutParams(LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER));
         frameLayout.addView(btnLogin);
+        frameLayout.setBackgroundColor(Color.WHITE);
+        fragmentView = frameLayout;
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presentFragment(new ServiceDetailActivity());
+                //presentFragment(new MainActivity());
             }
         });
-        frameLayout.setBackgroundColor(Color.WHITE);
-        fragmentView = frameLayout;
         return super.createView(context);
     }
 }
