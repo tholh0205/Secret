@@ -2,6 +2,7 @@ package com.secret.ui;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -45,7 +46,10 @@ public class SplashActivity extends BaseFragment {
                     Utils.runOnUIThread(new Runnable() {
                         @Override
                         public void run() {
-                            presentFragment(new LoginActivity(), true, true);
+                            if (getParentActivity() != null && !getParentActivity().isFinishing()) {
+                                presentFragment(new LoginActivity(), true, true);
+                            }
+                            mThread = null;
                         }
                     });
                 } catch (InterruptedException e) {
