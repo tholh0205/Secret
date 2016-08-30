@@ -3,7 +3,9 @@ package com.secret.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.ActionMode;
 import android.view.Window;
 
 import com.secret.GlobalVars;
@@ -40,7 +42,7 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
         actionBarLayout.init(mainFragmentStack);
         actionBarLayout.setDelegate(this);
         if (actionBarLayout.fragmentsStack.isEmpty()) {
-            actionBarLayout.addFragmentToStack(new LoginActivity());
+            actionBarLayout.addFragmentToStack(new SplashActivity());
         }
 
         actionBarLayout.showLastFragment();
@@ -85,6 +87,24 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
             BaseFragment fragment = actionBarLayout.fragmentsStack.get(actionBarLayout.fragmentsStack.size() - 1);
             fragment.onRequestPermissionsResultFragment(requestCode, permissions, grantResults);
         }
+    }
+
+    @Override
+    public void onActionModeStarted(ActionMode mode) {
+        super.onActionModeStarted(mode);
+        if (Build.VERSION.SDK_INT >= 23 && mode.getType() == ActionMode.TYPE_FLOATING) {
+            return;
+        }
+        actionBarLayout.onActionModeStarted(mode);
+    }
+
+    @Override
+    public void onActionModeFinished(ActionMode mode) {
+        super.onActionModeFinished(mode);
+        if (Build.VERSION.SDK_INT >= 23 && mode.getType() == ActionMode.TYPE_FLOATING) {
+            return;
+        }
+        actionBarLayout.onActionModeFinished(mode);
     }
 
     @Override
