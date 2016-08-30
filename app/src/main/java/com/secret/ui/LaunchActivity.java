@@ -6,9 +6,12 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Window;
 
+import com.secret.GlobalVars;
+import com.secret.R;
 import com.secret.actionbar.ActionBarLayout;
 import com.secret.actionbar.BaseFragment;
 import com.secret.ui.LoginActivity;
+import com.secret.ui.widgets.InsetsLayout;
 import com.secret.ui.widgets.LayoutHelper;
 
 import java.util.ArrayList;
@@ -24,8 +27,16 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
+        getWindow().setBackgroundDrawableResource(R.drawable.bg_transparent);
+
         actionBarLayout = new ActionBarLayout(this);
-        setContentView(actionBarLayout, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        if (GlobalVars.useOccupyStatusBar) {
+            InsetsLayout layout = new InsetsLayout(this);
+            layout.addView(actionBarLayout);
+            setContentView(layout);
+        } else {
+            setContentView(actionBarLayout, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        }
         actionBarLayout.init(mainFragmentStack);
         actionBarLayout.setDelegate(this);
         if (actionBarLayout.fragmentsStack.isEmpty()) {

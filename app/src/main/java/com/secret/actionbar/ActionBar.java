@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.secret.GlobalVars;
 import com.secret.R;
 import com.secret.Utils;
 
@@ -39,7 +40,7 @@ public class ActionBar extends FrameLayout {
     private View actionModeTop;
     private ActionBarMenu menu;
     private ActionBarMenu actionMode;
-    private boolean occupyStatusBar = false;
+    private boolean occupyStatusBar = GlobalVars.useOccupyStatusBar;
 
     private boolean allowOverlayTitle;
     private CharSequence lastTitle;
