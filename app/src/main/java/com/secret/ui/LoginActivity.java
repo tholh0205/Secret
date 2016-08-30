@@ -72,9 +72,67 @@ public class LoginActivity extends BaseFragment {
         mIntroPager.setLayoutParams(LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP));
         mIntroPager.setBackgroundResource(R.drawable.intro_background);
         frameLayout.addView(mIntroPager);
-        mBottomFunctionsLayout = new FrameLayout(context);
+        mBottomFunctionsLayout = new FrameLayout(context) {
+            @Override
+            protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+                int childCount = getChildCount();
+                for (int i = 0; i < childCount; i++) {
+                    View child = getChildAt(i);
+                    if (child.getVisibility() == GONE) {
+                        continue;
+                    }
+
+                    FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) child.getLayoutParams();
+
+                    int width = child.getMeasuredWidth();
+                    int height = child.getMeasuredHeight();
+                    int childLeft;
+                    int childTop;
+
+                    int gravity = lp.gravity;
+                    if (gravity == -1) {
+                        gravity = Gravity.TOP | Gravity.LEFT;
+                    }
+
+                    final int absoluteGravity = gravity & Gravity.HORIZONTAL_GRAVITY_MASK;
+                    final int verticalGravity = gravity & Gravity.VERTICAL_GRAVITY_MASK;
+
+                    switch (absoluteGravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
+                        case Gravity.CENTER_HORIZONTAL:
+                            childLeft = (right - left - width) / 2 + lp.leftMargin - lp.rightMargin;
+                            break;
+                        case Gravity.RIGHT:
+                            childLeft = right - width - lp.rightMargin;
+                            break;
+                        case Gravity.LEFT:
+                        default:
+                            childLeft = lp.leftMargin;
+                    }
+
+                    switch (verticalGravity) {
+                        case Gravity.TOP:
+                            childTop = lp.topMargin;
+                            break;
+                        case Gravity.CENTER_VERTICAL:
+                            childTop = (bottom - top - height) / 2 + lp.topMargin - lp.bottomMargin;
+                            break;
+                        case Gravity.BOTTOM:
+                            childTop = (bottom - top) - height - lp.bottomMargin;
+                            break;
+                        default:
+                            childTop = lp.topMargin;
+                    }
+                    if (child == btnFacebook || child == btnGooglePlus) {
+                        childTop = getMeasuredHeight() / 2 - height - Utils.dp(8);
+                    } else if (child == btnLogin) {
+                        childTop = (getMeasuredHeight() / 2 + Utils.dp(8));
+                    }
+                    child.layout(childLeft, childTop, childLeft + width, childTop + height);
+                }
+            }
+        };
         mBottomFunctionsLayout.setBackgroundResource(R.drawable.default_background);
-        mBottomFunctionsLayout.setLayoutParams(LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 200, Gravity.LEFT | Gravity.BOTTOM));
+        mBottomFunctionsLayout.setLayoutParams(LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 180, Gravity.LEFT | Gravity.BOTTOM));
         frameLayout.addView(mBottomFunctionsLayout);
         mBottomPages = new LinearLayout(context);
         mBottomPages.setOrientation(LinearLayout.HORIZONTAL);
@@ -95,7 +153,7 @@ public class LoginActivity extends BaseFragment {
         btnFacebook.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
         btnFacebook.setPadding(Utils.dp(28), 0, Utils.dp(28), 0);
         btnFacebook.setBackgroundResource(R.drawable.facebook_button_bg);
-        btnFacebook.setLayoutParams(LayoutHelper.createFrame(160, 43, Gravity.LEFT | Gravity.BOTTOM, 14, 0, 14, 110));
+        btnFacebook.setLayoutParams(LayoutHelper.createFrame(160, 43, Gravity.LEFT | Gravity.BOTTOM, 14, 0, 14, 0));
         mBottomFunctionsLayout.addView(btnFacebook);
 
         btnGooglePlus = new Button(context);
@@ -107,7 +165,7 @@ public class LoginActivity extends BaseFragment {
         btnGooglePlus.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
         btnGooglePlus.setPadding(Utils.dp(28), 0, Utils.dp(28), 0);
         btnGooglePlus.setBackgroundResource(R.drawable.facebook_button_bg);
-        btnGooglePlus.setLayoutParams(LayoutHelper.createFrame(160, 43, Gravity.RIGHT | Gravity.BOTTOM, 14, 0, 14, 110));
+        btnGooglePlus.setLayoutParams(LayoutHelper.createFrame(160, 43, Gravity.RIGHT | Gravity.BOTTOM, 14, 0, 14, 0));
         mBottomFunctionsLayout.addView(btnGooglePlus);
 
         btnLogin = new Button(context);
@@ -115,7 +173,7 @@ public class LoginActivity extends BaseFragment {
         btnLogin.setTextColor(Color.WHITE);
         btnLogin.setAllCaps(false);
         btnLogin.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
-        btnLogin.setLayoutParams(LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 43, Gravity.BOTTOM, 14, 0, 14, 40));
+        btnLogin.setLayoutParams(LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 43, Gravity.BOTTOM, 14, 0, 14, 0));
         btnLogin.setBackgroundResource(R.drawable.login_button_bg);
         mBottomFunctionsLayout.addView(btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {

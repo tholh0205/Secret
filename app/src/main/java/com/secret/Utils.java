@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -130,6 +132,21 @@ public class Utils {
 
     public static void cancelRunOnUIThread(Runnable r) {
         ApplicationLoader.applicationHandler.removeCallbacks(r);
+    }
+
+    public static boolean isNetworkAvailable(boolean showMess) {
+        boolean status = false;
+        try {
+            ConnectivityManager cm = (ConnectivityManager) ApplicationLoader.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.getState() == NetworkInfo.State.CONNECTED) {
+                status = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            status = false;
+        }
+        return status;
     }
 
 }
