@@ -118,7 +118,7 @@ public class LoginActivity extends BaseFragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                presentFragment(new MainActivity());
             }
         });
         fragmentView = frameLayout;

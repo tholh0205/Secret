@@ -17,6 +17,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.secret.actionbar.ActionBar;
 import com.secret.actionbar.BaseFragment;
 import com.secret.ui.widgets.LayoutHelper;
+import com.secret.ui.widgets.zoomable.ZoomableDraweeView;
 
 /**
  * Created by tholh on 8/23/16.
@@ -42,7 +43,7 @@ public class MainActivity extends BaseFragment {
         });
         frameLayout.addView(actionBar);
 
-        final SimpleDraweeView imageView = new SimpleDraweeView(context);
+        final ZoomableDraweeView imageView = new ZoomableDraweeView(context);
         imageView.setLayoutParams(LayoutHelper.createFrame(300, 300, Gravity.CENTER));
         frameLayout.addView(imageView);
         GenericDraweeHierarchyBuilder builder =
@@ -50,26 +51,26 @@ public class MainActivity extends BaseFragment {
         GenericDraweeHierarchy hierarchy = builder
                 .setFadeDuration(1000)
                 .build();
-        //imageView.setHierarchy(hierarchy);
-        Uri uri = Uri.parse("https://media3.giphy.com/media/JLQUx1mbgv2hO/200.gif");
+        imageView.setHierarchy(hierarchy);
+//        Uri uri = Uri.parse("https://media3.giphy.com/media/JLQUx1mbgv2hO/200.gif");
+        Uri uri = Uri.parse("https://dyn0.media.forbiddenplanet.com/products/god%20of%20bloody%20war.jpg.jpg");
         //Controller is required for controller the GIF animation, here I have just set it to autoplay as per the fresco guide.
         DraweeController controller = Fresco.newDraweeControllerBuilder()
                 .setUri(uri)
-                .setAutoPlayAnimations(true)
                 .build();
-        //controller.setHierarchy(hierarchy);
+//        //controller.setHierarchy(hierarchy);
         imageView.setController(controller);
         //imageView.setImageURI("https://dyn0.media.forbiddenplanet.com/products/god%20of%20bloody%20war.jpg.jpg");
-        //imageView.setImageURI("https://media.giphy.com/media/YcnsqEiOUE1ag/giphy-downsized-large.gif");
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Animatable animatable = imageView.getController().getAnimatable();
-                if (animatable != null) {
-                    animatable.start();
-                }
-            }
-        });
+//        imageView.setImageURI("https://media.giphy.com/media/YcnsqEiOUE1ag/giphy-downsized-large.gif");
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Animatable animatable = imageView.getController().getAnimatable();
+//                if (animatable != null) {
+//                    animatable.start();
+//                }
+//            }
+//        });
 
         Button btnLogin = new Button(context);
         btnLogin.setText("Main");
