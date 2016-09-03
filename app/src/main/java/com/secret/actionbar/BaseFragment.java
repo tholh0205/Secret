@@ -199,6 +199,12 @@ public class BaseFragment {
         return null;
     }
 
+    public void startActivityForResult(final Intent intent, final int requestCode) {
+        if (parentLayout != null) {
+            parentLayout.startActivityForResult(intent, requestCode);
+        }
+    }
+
     public void finishFragment() {
         finishFragment(true);
     }

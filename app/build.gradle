@@ -26,4 +26,5 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.facebook.fresco:fresco:0.13.0'
     compile 'com.facebook.fresco:animated-gif:0.13.0'
+    compile 'com.facebook.android:facebook-android-sdk:4.15.0'
 }

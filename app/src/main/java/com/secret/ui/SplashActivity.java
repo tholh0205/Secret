@@ -42,7 +42,7 @@ public class SplashActivity extends BaseFragment {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(2000);
                     Utils.runOnUIThread(new Runnable() {
                         @Override
                         public void run() {

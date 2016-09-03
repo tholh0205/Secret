@@ -2,6 +2,7 @@ package com.secret.ui;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.DataSetObserver;
 import android.graphics.Color;
@@ -19,6 +20,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookAuthorizationException;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.secret.R;
 import com.secret.Theme;
 import com.secret.Utils;
@@ -26,17 +38,49 @@ import com.secret.actionbar.ActionBar;
 import com.secret.actionbar.BaseFragment;
 import com.secret.ui.widgets.LayoutHelper;
 
+import java.util.Arrays;
+
 /**
  * Created by ThoLH on 8/23/16.
  */
-public class LoginActivity extends BaseFragment {
+public class LoginActivity extends BaseFragment implements View.OnClickListener {
     private int[] mIntroImages;
     private FrameLayout mBottomFunctionsLayout;
     private ViewPager mIntroPager;
-    private Button btnLogin;
-    private Button btnFacebook;
-    private Button btnGooglePlus;
+    private TextView btnLogin;
+    private TextView btnFacebook;
+    private TextView btnGooglePlus;
     private LinearLayout mBottomPages;
+
+    private CallbackManager callbackManager;
+
+    private FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
+        @Override
+        public void onSuccess(LoginResult loginResult) {
+            Profile profile = Profile.getCurrentProfile();
+            Utils.runOnUIThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (getParentActivity() != null) {
+                        Intent intent = new Intent(getParentActivity(), SignUpActivity.class);
+                        startActivityForResult(intent, 101);
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onCancel() {
+        }
+
+        @Override
+        public void onError(FacebookException e) {
+            if (e instanceof FacebookAuthorizationException) {
+                LoginManager.getInstance().logOut();
+            }
+        }
+    };
+
 
     @Override
     protected boolean onFragmentCreate() {
@@ -49,6 +93,8 @@ public class LoginActivity extends BaseFragment {
 
     @Override
     protected View createView(Context context) {
+        FacebookSdk.sdkInitialize(getParentActivity().getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
         FrameLayout frameLayout = new FrameLayout(context) {
             @Override
             protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -131,6 +177,7 @@ public class LoginActivity extends BaseFragment {
                 }
             }
         };
+
         mBottomFunctionsLayout.setBackgroundResource(R.drawable.default_background);
         mBottomFunctionsLayout.setLayoutParams(LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 180, Gravity.LEFT | Gravity.BOTTOM));
         frameLayout.addView(mBottomFunctionsLayout);
@@ -144,7 +191,7 @@ public class LoginActivity extends BaseFragment {
         mBottomPages.setLayoutParams(LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 10, 0, 0));
         mBottomFunctionsLayout.addView(mBottomPages);
 
-        btnFacebook = new Button(context);
+        btnFacebook = new TextView(context);
         btnFacebook.setText("Facebook");
         btnFacebook.setAllCaps(false);
         btnFacebook.setTextColor(Color.BLACK);
@@ -152,11 +199,14 @@ public class LoginActivity extends BaseFragment {
         btnFacebook.setCompoundDrawablePadding(Utils.dp(5));
         btnFacebook.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
         btnFacebook.setPadding(Utils.dp(28), 0, Utils.dp(28), 0);
-        btnFacebook.setBackgroundResource(R.drawable.facebook_button_bg);
+        btnFacebook.setGravity(Gravity.CENTER);
+        btnFacebook.setBackgroundResource(R.drawable.button_white_with_radius);
         btnFacebook.setLayoutParams(LayoutHelper.createFrame(160, 43, Gravity.LEFT | Gravity.BOTTOM, 14, 0, 14, 0));
+        LoginManager.getInstance().registerCallback(callbackManager, callback);
+        btnFacebook.setOnClickListener(this);
         mBottomFunctionsLayout.addView(btnFacebook);
 
-        btnGooglePlus = new Button(context);
+        btnGooglePlus = new TextView(context);
         btnGooglePlus.setText("Google");
         btnGooglePlus.setAllCaps(false);
         btnGooglePlus.setTextColor(Color.BLACK);
@@ -164,26 +214,35 @@ public class LoginActivity extends BaseFragment {
         btnGooglePlus.setCompoundDrawablePadding(Utils.dp(5));
         btnGooglePlus.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
         btnGooglePlus.setPadding(Utils.dp(28), 0, Utils.dp(28), 0);
-        btnGooglePlus.setBackgroundResource(R.drawable.facebook_button_bg);
+        btnGooglePlus.setBackgroundResource(R.drawable.button_white_with_radius);
+        btnGooglePlus.setGravity(Gravity.CENTER);
         btnGooglePlus.setLayoutParams(LayoutHelper.createFrame(160, 43, Gravity.RIGHT | Gravity.BOTTOM, 14, 0, 14, 0));
+        btnGooglePlus.setOnClickListener(this);
         mBottomFunctionsLayout.addView(btnGooglePlus);
 
-        btnLogin = new Button(context);
+        btnLogin = new TextView(context);
         btnLogin.setText("Login");
         btnLogin.setTextColor(Color.WHITE);
         btnLogin.setAllCaps(false);
         btnLogin.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f);
+        btnLogin.setGravity(Gravity.CENTER);
         btnLogin.setLayoutParams(LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 43, Gravity.BOTTOM, 14, 0, 14, 0));
-        btnLogin.setBackgroundResource(R.drawable.login_button_bg);
+        btnLogin.setBackgroundResource(R.drawable.button_transparent_white_border_with_radius);
         mBottomFunctionsLayout.addView(btnLogin);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presentFragment(new MainActivity());
-            }
-        });
+        btnLogin.setOnClickListener(this);
         fragmentView = frameLayout;
         return super.createView(context);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == btnFacebook) {
+            LoginManager.getInstance().logInWithReadPermissions(getParentActivity(), Arrays.asList("public_profile", "user_friends", "email"));
+        } else if (view == btnGooglePlus) {
+
+        } else if (view == btnLogin) {
+
+        }
     }
 
     @Override
@@ -197,6 +256,13 @@ public class LoginActivity extends BaseFragment {
     @Override
     public void onRequestPermissionsResultFragment(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResultFragment(requestCode, permissions, grantResults);
+    }
+
+
+    @Override
+    public void onActivityResultFragment(int requestCode, int resultCode, Intent data) {
+        super.onActivityResultFragment(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private class IntroAdapter extends PagerAdapter {
