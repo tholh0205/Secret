@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffffff"
+    android:orientation="vertical"
+    android:padding="26dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set your location"
+        android:textColor="#de000000"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Sella uses your location to show better results near you. Your privacy is protected"
+        android:textColor="#ff222222"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_blue_with_radius"
+        android:gravity="center"
+        android:text="Select your city"
+        android:textColor="#ffffffff"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="#ffffffff"
+        android:text="or"
+        android:textColor="#ff9b9b9b"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_transparent_gray_border_with_radius"
+        android:gravity="center"
+        android:text="Turn on Location Services"
+        android:textColor="#ff666666"
+        android:textSize="16sp" />
+</LinearLayout>

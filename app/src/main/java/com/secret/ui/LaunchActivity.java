@@ -2,7 +2,6 @@ package com.secret.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.ActionMode;
@@ -12,7 +11,6 @@ import com.secret.GlobalVars;
 import com.secret.R;
 import com.secret.actionbar.ActionBarLayout;
 import com.secret.actionbar.BaseFragment;
-import com.secret.ui.LoginActivity;
 import com.secret.ui.widgets.InsetsLayout;
 import com.secret.ui.widgets.LayoutHelper;
 

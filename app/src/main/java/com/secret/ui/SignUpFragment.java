@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.secret.R;
 import com.secret.actionbar.ActionBar;
+import com.secret.ui.dialogs.SetLocationDialog;
 import com.secret.ui.drawables.BackDrawable;
 
 /**
@@ -77,5 +78,11 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         } else if (view == btnSignUp) {
 
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        new SetLocationDialog(getActivity()).show();
     }
 }

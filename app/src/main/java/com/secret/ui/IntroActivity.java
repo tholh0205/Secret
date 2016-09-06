@@ -53,7 +53,7 @@ import retrofit2.Response;
 /**
  * Created by ThoLH on 8/23/16.
  */
-public class LoginActivity extends BaseFragment implements View.OnClickListener {
+public class IntroActivity extends BaseFragment implements View.OnClickListener {
     private int[] mIntroImages;
     private FrameLayout mBottomFunctionsLayout;
     private ViewPager mIntroPager;
@@ -264,7 +264,10 @@ public class LoginActivity extends BaseFragment implements View.OnClickListener 
                 }
             });
         } else if (view == btnLogin) {
-
+            if (getParentActivity() != null) {
+                Intent intent = new Intent(getParentActivity(), SignUpActivity.class);
+                startActivityForResult(intent, 101);
+            }
         }
     }
 
