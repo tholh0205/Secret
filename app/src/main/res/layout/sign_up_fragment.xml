@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffffff"
+    android:orientation="vertical">
+
+    <com.secret.actionbar.ActionBar
+        android:id="@+id/secret_action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffffff" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/tv_sign_up_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create a Sella username"
+                android:textColor="#ff222222"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/img_avatar"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_below="@id/tv_sign_up_title"
+                android:layout_marginTop="28dp"
+                android:src="@drawable/ic_photo_camera" />
+
+            <TextView
+                android:id="@+id/tv_username_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/img_avatar"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@id/img_avatar"
+                android:text="Username"
+                android:textColor="#ff3e88de"
+                android:textSize="14sp" />
+
+            <com.secret.ui.widgets.ClearableEditText
+                android:id="@+id/edt_username"
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:layout_alignLeft="@id/tv_username_title"
+                android:layout_below="@id/tv_username_title"
+                android:background="@drawable/edit_text_bg"
+                android:hint="Enter username"
+                android:includeFontPadding="false"
+                android:textColor="#ff222222"
+                android:textCursorDrawable="@null"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_password_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/tv_username_title"
+                android:layout_below="@id/edt_username"
+                android:layout_marginTop="29dp"
+                android:text="Password"
+                android:textColor="#ff3e88de"
+                android:textSize="14sp" />
+
+            <com.secret.ui.widgets.ClearableEditText
+                android:id="@+id/edt_password"
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:layout_alignLeft="@id/tv_password_title"
+                android:layout_below="@id/tv_password_title"
+                android:background="@drawable/edit_text_bg"
+                android:hint="Enter password"
+                android:includeFontPadding="false"
+                android:textColor="#ff222222"
+                android:textCursorDrawable="@null"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tv_show_hide_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/edt_password"
+                android:layout_alignTop="@id/tv_password_title"
+                android:text="Show"
+                android:textColor="#ff3e88de"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_phone_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/tv_username_title"
+                android:layout_below="@id/edt_password"
+                android:layout_marginTop="29dp"
+                android:text="Phone number"
+                android:textColor="#ff3e88de"
+                android:textSize="14sp" />
+
+            <com.secret.ui.widgets.ClearableEditText
+                android:id="@+id/edt_phone"
+                android:layout_width="match_parent"
+                android:layout_height="33dp"
+                android:layout_alignLeft="@id/tv_phone_title"
+                android:layout_below="@id/tv_phone_title"
+                android:background="@drawable/edit_text_bg"
+                android:hint="Enter phone number"
+                android:includeFontPadding="false"
+                android:textColor="#ff222222"
+                android:textCursorDrawable="@null"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/btn_sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:layout_below="@id/edt_phone"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/button_blue_with_radius"
+                android:gravity="center"
+                android:text="Sign Up"
+                android:textColor="#ffffffff"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

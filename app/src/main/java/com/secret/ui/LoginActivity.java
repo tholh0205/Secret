@@ -10,6 +10,7 @@ import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -36,9 +37,18 @@ import com.secret.Theme;
 import com.secret.Utils;
 import com.secret.actionbar.ActionBar;
 import com.secret.actionbar.BaseFragment;
+import com.secret.model.Album;
+import com.secret.model.AlbumResponse;
+import com.secret.network.ApiClient;
+import com.secret.network.ApiInterface;
 import com.secret.ui.widgets.LayoutHelper;
 
 import java.util.Arrays;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by ThoLH on 8/23/16.
@@ -239,7 +249,20 @@ public class LoginActivity extends BaseFragment implements View.OnClickListener 
         if (view == btnFacebook) {
             LoginManager.getInstance().logInWithReadPermissions(getParentActivity(), Arrays.asList("public_profile", "user_friends", "email"));
         } else if (view == btnGooglePlus) {
+            ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+            Call<AlbumResponse> call = apiService.getAlbumsByPage(1, 20);
+            call.enqueue(new Callback<AlbumResponse>() {
+                @Override
+                public void onResponse(Call<AlbumResponse> call, Response<AlbumResponse> response) {
+                    List<Album> albums = response.body().getData();
+                    Log.d("ThoLH", "getAlbumsByPage " + albums.size());
+                }
 
+                @Override
+                public void onFailure(Call<AlbumResponse> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
         } else if (view == btnLogin) {
 
         }
